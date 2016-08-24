@@ -1,0 +1,53 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+function loadgist(gistid) {
+	$.ajax({
+		url: 'https://api.github.com/gists/'+gistid,
+		type: 'GET',
+		dataType: 'jsonp'
+	}).success( function(gistdata) {
+var objects = [];
+var files= gistdata.data.files;
+
+for (file in files) {
+	if (files.hasOwnProperty(file)) {
+		var filename = files[file].filename;
+		var filecontent = files[file].content;
+		var object_nc={
+			filename:filename,
+			filecontent:filecontent
+		};
+		objects.push(object_nc);
+	}
+}
+if (objects.length > 0) {
+	DoSomethingWith(objects)
+}
+}).error( function(e) {
+});
+}
+
+function DoSomethingWith(objects) {
+	for (index in objects) {
+		console.log(index+':'+objects[index].filename);	
+		if (objects[index].filename == 'index.html') {
+				document.write(objects[index].filecontent);
+		}
+	}
+}
+
+function getParameterByName(name, url) {
+	if (!url) url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+
+var gistid=getParameterByName('id');
+loadgist(gistid);
+
+</script>
