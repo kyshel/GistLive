@@ -1,61 +1,145 @@
-<meta charset="utf-8">
+<!DOCTYPE html>
+<html>
 
-<div class="nav"></div>
-<div class="container">
-	<h1 class="pro_name"></h1>
-	<div class="raw">
-		<iframe id="iframe_raw" src=""></iframe>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/arduino-light.min.css">
+</head>
+
+<body>
+<div class="nav">
+	<div class="container">
+		<div class="navigation">
+			<a href="//kyshel.com">Kyshel</a>
+			/ 
+			<a href="about.html">About</a>
+		</div>
+
+		<a id="owner_link" class="user" href="/mbostock">
+			<img id="avatar" class="avatar" src="https://avatars.githubusercontent.com/u/230541?v=3&amp;s=60" width="30" height="30">
+			<span id="owner_name">Mike Bostock</span>
+		</a>
+		’s Gist 
+
+		<a id="link_id" class="gist gist-id self" title="View Gist on GitHub." href="https://gist.github.com/mbostock/4063269">4063269</a>
+
+		<div id="update_time" class="date">Updated May 28, 2016</div>
 	</div>
-	<div class="readme">
-		
-	</div>
-	<div class="code"></div>
-		<pre id="pre_code">
-			
-		</pre>
-	<div class="license"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<div class="container">
+	<h1 id="description"></h1>
+
+	<div id="raw">
+		<iframe id="iframe_raw" src="" sandbox="allow-popups allow-scripts allow-forms allow-same-origin" marginwidth="0" marginheight="0" style="border: solid 1px #eee;" scrolling="no"></iframe>
+	</div>
+	<div class="index-pop">
+		<a id="link_pop" target="_blank" title="Open Block 4063269 a new window." href="">Open<svg height="16" width="12"><path d="M11 10h1v3c0 0.55-0.45 1-1 1H1c-0.55 0-1-0.45-1-1V3c0-0.55 0.45-1 1-1h3v1H1v10h10V10zM6 2l2.25 2.25-3.25 3.25 1.5 1.5 3.25-3.25 2.25 2.25V2H6z"></path></svg></a>
+	</div>
+
+	<div id="readme" class="gist-readme">
+	
+		
+	</div>
+
+	<div id="source">
+		<h2>index.html<a name="index.html" class="anchor" href="#index.html">#</a></h2>
+		<pre><code id="code" class="" ><h1>this is h1</h1></code></pre>
+	</div>
+
+	<div class="gist-license">
+		<h2>LICENSE<a name="license" class="anchor" href="#license">#</a></h2>
+		<div id="license"></div>	
+	</div>
+</div>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <script type="text/javascript">
+
 	function loadgist(gistid) {
+
+
+
+
+
 		$.ajax({
 			url: 'https://api.github.com/gists/'+gistid,
 			type: 'GET',
 			dataType: 'jsonp'
 		}).success( function(gistdata) {
-			var objects = [];
 			console.log(gistdata);
-			var files= gistdata.data.files;
+			renderPage(gistdata);
 
-			for (file in files) {
-				if (files.hasOwnProperty(file)) {
-					var filename = files[file].filename;
-					var filecontent = files[file].content;
-					var object_nc={
-						filename:filename,
-						filecontent:filecontent
-					};
-					objects.push(object_nc);
-				}
-			}
-			if (objects.length > 0) {
-				DoSomethingWith(objects,gistdata.data.id)
-			}
 		}).error( function(e) {
 		});
 	}
 
-	function DoSomethingWith(objects,gistid) {
-		for (index in objects) {
-			console.log(index+':'+objects[index].filename);	
-			if (objects[index].filename == 'index.html') {
-				document.getElementById('iframe_raw').src = "raw/?id="+gistid;
-				//document.getElementById("pre_code").innerHTML = objects[index].filecontent;
+	function renderPage(gistdata) {
+		var owner_name=gistdata.data.owner.login,
+		avatar_url=gistdata.data.owner.avatar_url,
+		update_time=new Date(gistdata.data.updated_at),
+		gist_id=gistdata.data.id
+		description=gistdata.data.description;
 
+		var month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+
+		document.getElementById('owner_link').href="https://github.com/"+owner_name;
+		document.getElementById('avatar').src=avatar_url;
+		document.getElementById('owner_name').innerHTML=owner_name;
+		document.getElementById('link_id').href="https://gist.github.com/"+owner_name+"/"+gist_id;
+		document.getElementById('link_id').innerHTML=gist_id;
+		document.getElementById('update_time').innerHTML="Updated "
+		+month[update_time.getMonth()] + " "
+		+update_time.getDate() + ", "
+		+update_time.getFullYear();
+		document.getElementById('description').innerHTML=(description=='')?gist_id:description;
+		document.getElementById('link_pop').href="raw/?id="+gistid;
+		document.getElementById('link_pop').title="Open Gist "+gistid+" a new window";
+
+
+		var files= gistdata.data.files;
+			for (file in files) {
+				if (files.hasOwnProperty(file)) {
+					var filename = files[file].filename;
+					var filecontent = files[file].content;
+
+					if (filename == 'index.html') {
+						document.getElementById('iframe_raw').src = "raw/?id="+gistid;
+						document.getElementById('code').innerHTML = escapeHtml(filecontent);
+						$('pre code').each(function(i, block) {
+							hljs.highlightBlock(block);
+						});
+					}else if(filename == 'readme.md'){
+						var converter = new showdown.Converter(),
+						text      = filecontent,
+						html      = converter.makeHtml(text);
+						document.getElementById('readme').innerHTML=html;
+
+					}else if(filename == '.json'){
+						var object_json=JSON.parse(filecontent);
+						
+						var height=object_json.hasOwnProperty('height')?object_json.height:'700px';
+						var license=object_json.hasOwnProperty('license')?object_json.license:'This block appears to have <a target="_blank" href="http://choosealicense.com/no-license/">no license</a>. Please contact <a target="_blank" href="https://github.com/'+owner_name+'">the author</a> to request a license.';
+
+						document.getElementById('iframe_raw').height=height;
+						$.getJSON("data.json", function(json) {
+							lic_lists=json.license;
+							var show=lic_lists.hasOwnProperty(license)?lic_lists[license]:'Released under the <a target="_blank" href="https://opensource.org/licenses/'+license+'">'+license+' License</a>';
+							document.getElementById('license').innerHTML=show;
+						});
+					}
+				}
 			}
-		}
 	}
+
+
 
 	function getParameterByName(name, url) {
 		if (!url) url = window.location.href;
@@ -67,8 +151,22 @@
 		return decodeURIComponent(results[2].replace(/\+/g, " "));
 	}
 
+	function escapeHtml(text) {
+		var map = {
+			'&': '&amp;',
+			'<': '&lt;',
+			'>': '&gt;',
+			'"': '&quot;',
+			"'": '&#039;'
+		};
+
+		return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+	}
+
 
 	var gistid=getParameterByName('id');
 	loadgist(gistid);
 
 </script>
+
+</html>
