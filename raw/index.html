@@ -29,7 +29,6 @@ if (objects.length > 0) {
 
 function DoSomethingWith(objects) {
 	for (index in objects) {
-		console.log(index+':'+objects[index].filename);	
 		if (objects[index].filename == 'index.html') {
 				document.write(objects[index].filecontent);
 		}
