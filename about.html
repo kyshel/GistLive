@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+<div class="nav">
+	<div class="container">
+		<div class="navigation">
+			<a href="//kyshel.com">Kyshel</a>
+			/ 
+			<a href="about.html">About</a>
+		</div>
+
+
+		About GistLive
+
+		<div id="update_time" class="date">Since August 26, 2016</div>
+	</div>
+</div>
+
+<div class="container">
+	<div id="about"></div>
+</div>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+function readTextFile(file)
+{
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("GET", file, false);
+	rawFile.onreadystatechange = function ()
+	{
+		if(rawFile.readyState === 4)
+		{
+			if(rawFile.status === 200 || rawFile.status == 0)
+			{
+				var allText = rawFile.responseText;
+
+				//below is showdown work
+				var converter = new showdown.Converter(),
+				text      = allText,
+				html      = converter.makeHtml(text);
+				document.getElementById('about').innerHTML=html;
+			}
+		}
+	}
+	rawFile.send(null);
+}
+
+readTextFile("about.md");
+
+</script>
+
+</html>
