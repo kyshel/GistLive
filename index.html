@@ -165,6 +165,9 @@
 
 
 	var gistid=getParameterByName('id');
+	if(gistid==NULL){
+		window.location.href="about.html"
+	}
 	loadgist(gistid);
 
 </script>
