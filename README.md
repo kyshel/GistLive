@@ -3,9 +3,9 @@ GistLive is a simple viewer for sharing live code examples hosted on GitHub Gist
 
 [https://gist.github.com/kyshel/53468bff883a0d195622d8c8506c7eb2](https://gist.github.com/kyshel/53468bff883a0d195622d8c8506c7eb2)
 
-Replace “gist.github.com” with “kyshel.github.io/gistlive/?id=” in the URL to view it:
+Replace “gist.github.com” with “kyshel.github.io/GistLive/?id=” in the URL to view it:
 
-[https://kyshel.github.io/gistlive/?id=53468bff883a0d195622d8c8506c7eb2](https://kyshel.github.io/gistlive/?id=53468bff883a0d195622d8c8506c7eb2)
+[https://kyshel.github.io/GistLive/?id=53468bff883a0d195622d8c8506c7eb2](https://kyshel.github.io/gistlive/?id=53468bff883a0d195622d8c8506c7eb2)
 
 Your Gist need:
 
