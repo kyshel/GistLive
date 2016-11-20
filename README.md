@@ -1,5 +1,6 @@
 #GistLive
-GistLive is a simple viewer for sharing live code examples hosted on GitHub Gist. For example, if your Gist URL is:
+GistLive is a simple viewer for sharing live code examples hosted on GitHub Gist.   
+For example, if your Gist URL is:
 
 [https://gist.github.com/kyshel/53468bff883a0d195622d8c8506c7eb2](https://gist.github.com/kyshel/53468bff883a0d195622d8c8506c7eb2)
 
